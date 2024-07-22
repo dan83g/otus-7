@@ -36,7 +36,6 @@ export default function App() {
         {!tabForm && users?.map((user: UserProps) => <MemberCard {...user} />)}
         {!tabForm && moreUsers?.map((user: UserProps) => <MemberCard {...user} />)}
         {!tabForm && <ButtonWithLabel label="Нажми меня" caption="More users" onClick={onButtonClick} />}
-         {/* More users</ButtonWithLabel>} */}
         {tabForm && <Form onUserAddition={handleUserAddition} />}
         {addedUser && <MemberCard {...addedUser} />}
         </div>
