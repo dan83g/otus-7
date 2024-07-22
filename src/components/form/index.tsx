@@ -1,12 +1,13 @@
 import React, { useState, FormEvent, ChangeEvent } from 'react';
+import { Input } from '../input';
 import './style.scss';
 
 interface FormProps {
     onUserAddition: (user: any) => void; // Принимаем функцию для обновления состояния верхнего компонента
 }
 
-const Form: React.FC<FormProps> = ({ onUserAddition }) => {
-	const [username, setUsername] = useState<string>('');
+export const Form: React.FC<FormProps> = ({ onUserAddition }) => {
+	const [username, setUsername] = useState<string>('');	
 	const [phone, setPhone] = useState<string>('');
 	const [website, setWebsite] = useState<string>('');
 
@@ -24,7 +25,6 @@ const Form: React.FC<FormProps> = ({ onUserAddition }) => {
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-
 		fetch('https://jsonplaceholder.typicode.com/users', {
 			method: 'POST',
 			body: JSON.stringify({
@@ -36,33 +36,16 @@ const Form: React.FC<FormProps> = ({ onUserAddition }) => {
 				'Content-type': 'application/json; charset=UTF-8',
 			},
 		})
-			.then((response) => response.json())
-			.then((user) => onUserAddition(user));
+		.then((response) => response.json())
+		.then((user) => onUserAddition(user));
 	};
 
 	return (
 		<form onSubmit={handleSubmit} className="form-container">
-			<div>
-				<label>
-					Username:
-					<input type="text" value={username} onChange={handleUsernameChange} />
-				</label>
-			</div>
-			<div>
-				<label>
-					Phone:
-					<input type="text" value={phone} onChange={handlePhoneChange} />
-				</label>
-			</div>
-			<div>
-				<label>
-					Website:
-					<input type="email" value={website} onChange={handlewebsiteChange} />
-				</label>
-			</div>
+			<Input caption="Username:" value={username} onChange={handleUsernameChange} />
+			<Input caption="Phone:" value={phone} onChange={handlePhoneChange} />
+			<Input caption="Website:" value={website} onChange={handlewebsiteChange} />
 			<button className='button' type="submit">Submit</button>
 		</form>
 	);
 };
-
-export default Form;
